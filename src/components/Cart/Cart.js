@@ -1,12 +1,21 @@
 import Card from '../UI/Card';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import Modal from '../UI/Modal';
+import {cartActions} from '../../store/CartStore'
+
 
 
 const Cart = (props) => {
  
-  const cartItems= useSelector(state => state.cartReducer.cartItems)
+  const dispatch = useDispatch();
+  const cartItems= useSelector(state => state.cartReducer.cartItems) 
+ 
+  const hideBackDrop = ()=> {    
+    dispatch(cartActions.hideCart()) 
+  }
+
  
   console.log(cartItems);
 
@@ -20,6 +29,7 @@ const Cart = (props) => {
   })
  
   return (
+    <Modal onClose={hideBackDrop} >
     <Card className={classes.cart}>
       <h2>Your Shopping Cart</h2>
       <ul>
@@ -29,6 +39,7 @@ const Cart = (props) => {
         {items}
       </ul>
     </Card>
+    </Modal>
   );
 };
 
